@@ -1,9 +1,9 @@
-# React Chat Websocket application
+# React Chat socket.io application
 
-After cloning the repository, you need to start the websocket server first.
+After cloning the repository, you need to start the socket.io server first.
 
 ```shell
-cd server
+cd socket-server
 yarn install && node .
 ```
 
