@@ -1,0 +1,48 @@
+version: "3.8"
+services:
+  # ws:
+  #   container_name: ws_server
+  #   restart: on-failure
+  #   build:
+  #     context: .
+  #     dockerfile: server/Dockerfile
+  #   volumes:
+  #     - ./server:/app/server
+  #   ports:
+  #     - "8070:8070"
+  #   environment:
+  #     - CHOKIDAR_USEPOLLING=true
+  #     - WATCHPACK_POLLING=true
+  #   command: >
+  #     sh -c "node ."
+  socket-server:
+    container_name: socket_server
+    restart: on-failure
+    build:
+      context: .
+      dockerfile: socket-server/Dockerfile
+    volumes:
+      - ./socket-server:/app/socket-server
+    ports:
+      - "8071:8071"
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+      - WATCHPACK_POLLING=true
+    command: >
+      sh -c "node ."
+
+  react-app:
+    container_name: react_app
+    restart: on-failure
+    build: .
+    volumes:
+      - ./src:/app/src
+    ports:
+      - "3000:3000"
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+      - WATCHPACK_POLLING=true
+    command: >
+      sh -c "yarn start"
+    depends_on:
+      - socket-server
